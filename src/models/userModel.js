@@ -3,7 +3,7 @@ const db = require("../config/connection");
 const UserModel = {
   // CREATE
   create: (user, callback) => {
-    const query = "INSERT INTO users (name, email) VALUES (?, ?)";
+    const query = "INSERT INTO cliente (name, email) VALUES (?, ?)";
     db.query(query, [user.name, user.email], (err, result) => {
       if (err) return callback(err, null);
       console.log("Usuário criado:", result);
@@ -13,7 +13,7 @@ const UserModel = {
 
   // READ
   findAll: (callback) => {
-    const query = "SELECT * FROM users";
+    const query = "SELECT * FROM cliente";
     db.query(query, (err, results) => {
       if (err) return callback(err, null);
       console.log("Usuários encontrados:", results);
@@ -23,7 +23,7 @@ const UserModel = {
 
   // UPDATE
   update: (id, user, callback) => {
-    const query = "UPDATE users SET name = ?, email = ? WHERE id = ?";
+    const query = "UPDATE cliente SET name = ?, email = ? WHERE id = ?";
     db.query(query, [user.name, user.email, id], (err, result) => {
       if (err) return callback(err, null);
       console.log("Usuário atualizado:", result);
@@ -33,7 +33,7 @@ const UserModel = {
 
   // DELETE
   delete: (id, callback) => {
-    const query = "DELETE FROM users WHERE id = ?";
+    const query = "DELETE FROM cliente WHERE id = ?";
     db.query(query, [id], (err, result) => {
       if (err) return callback(err, null);
       console.log("Usuário deletado:", result);
