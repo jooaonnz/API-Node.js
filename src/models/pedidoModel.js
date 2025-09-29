@@ -1,17 +1,17 @@
 const db = require("../config/db");
 
-const PostModel = {
-  // Criar post
+const PedidoModel = {
+  // Criar post//id ver
   create: (post, callback) => {
-    const query = "INSERT INTO pedido (title, content, user_id) VALUES (?, ?, ?)";
-    db.query(query, [post.title, post.content, post.user_id], (err, result) => {
+    const query = "INSERT INTO pedido (name,valor , cliente_id) VALUES (?, ?, ?)";
+    db.query(query, [post.name, post.valor, post.cliente_id], (err, result) => {
       if (err) return callback(err, null);
       console.log("Post criado:", result);
       callback(null, result);
     });
   },
 
-  // Buscar todos os posts com dados do usuário
+  // Buscar todos os posts com dados do usuário //verificar esse get
   findAll: (callback) => {
     const query = `
       SELECT posts.id, posts.title, posts.content, users.name AS user_name, users.email AS user_email
@@ -20,7 +20,7 @@ const PostModel = {
     `;
     db.query(query, (err, results) => {
       if (err) return callback(err, null);
-      console.log("Posts encontrados:", results);
+      console.log("Lista de pedidos:", results);
       callback(null, results);
     });
   },
@@ -40,20 +40,20 @@ const PostModel = {
 
   // Atualizar post
   update: (id, post, callback) => {
-    const query = "UPDATE posts SET title = ?, content = ? WHERE id = ?";
+    const query = "UPDATE pedido SET title = ?, content = ? WHERE id = ?";
     db.query(query, [post.title, post.content, id], (err, result) => {
       if (err) return callback(err, null);
-      console.log("Post atualizado:", result);
+      console.log("pedido atualizado:", result);
       callback(null, result);
     });
   },
 
   // Deletar post
   delete: (id, callback) => {
-    const query = "DELETE FROM posts WHERE id = ?";
+    const query = "DELETE FROM pedido WHERE id = ?";
     db.query(query, [id], (err, result) => {
       if (err) return callback(err, null);
-      console.log("Post deletado:", result);
+      console.log("pedido deletado:", result);
       callback(null, result);
     });
   },

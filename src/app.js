@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
-const postRoutes = require("./routes/postRoutes");
+const pedidoRoutes = require("./routes/pedidoRoutes");
 const swaggerDocs = require("./config/swagger");
 
 dotenv.config();
@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Rotas
 app.use("/api/users", userRoutes);
-app.use("/api/posts", postRoutes);
+app.use("/api/pedido", pedidoRoutes);
 
 // Swagger
 swaggerDocs(app);

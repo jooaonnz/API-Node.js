@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const PostController = require("../controllers/postController");
+const PedidoController = require("../controllers/pedidoController");
 
 // Criar post
-router.post("/", PostController.createPost);
+router.post("/", PedidoController.createPedido);
 
 // Listar todos os posts
-router.get("/", PostController.getAllPosts);
+router.get("/", PedidoController.getAllPedidos);
 
 // Listar posts de um usuário específico
-router.get("/user/:userId", PostController.getPostsByUserId);
+router.get("/user/:userId", PedidoController.getPedidoByClienteId);
 
 // Atualizar post
-router.put("/:id", PostController.updatePost);
+router.put("/:id", PedidoController.updatePedido);
 
 // Deletar post
-router.delete("/:id", PostController.deletePost);
+router.delete("/:id", PedidoController.deletePedido);
 
 module.exports = router;
