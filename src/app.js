@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Rotas
 app.use("/api/users", userRoutes);
-app.use("/api/pedido", pedidoRoutes);
+app.use("/api/pedidos", pedidoRoutes);
 
 // Swagger
 swaggerDocs(app);
