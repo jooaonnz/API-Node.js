@@ -31,11 +31,10 @@ const PedidoController = require("../controllers/pedidoController");
  *           format: float
  *           description: Valor total do pedido
  *       example:
- *         id: 1
- *         cliente_id: 2
- *         produto: "Notebook Dell Inspiron"
- *         quantidade: 1
- *         valor: 3500.00
+ *         name: ""
+ *         valor: 0
+ *         cliente_id: 0
+ *
  */
 
 /**
