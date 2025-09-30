@@ -1,14 +1,19 @@
-const db = require("../config/db");
+const db = require("../config/connection");
 
 const PedidoModel = {
   // Criar pedido
   create: (pedido, callback) => {
-    const query = "INSERT INTO pedido (name, valor, cliente_id) VALUES (?, ?, ?)";
-    db.query(query, [pedido.name, pedido.valor, pedido.cliente_id], (err, result) => {
-      if (err) return callback(err, null);
-      console.log("Pedido criado:", result);
-      callback(null, result);
-    });
+    const query =
+      "INSERT INTO pedido (name, valor, cliente_id) VALUES (?, ?, ?)";
+    db.query(
+      query,
+      [pedido.name, pedido.valor, pedido.cliente_id],
+      (err, result) => {
+        if (err) return callback(err, null);
+        console.log("Pedido criado:", result);
+        callback(null, result);
+      }
+    );
   },
 
   // Buscar todos os pedidos
@@ -23,7 +28,8 @@ const PedidoModel = {
 
   // Buscar pedidos por cliente_id
   findByClienteId: (cliente_id, callback) => {
-    const query = "SELECT id, name, valor, cliente_id FROM pedido WHERE cliente_id = ?";
+    const query =
+      "SELECT id, name, valor, cliente_id FROM pedido WHERE cliente_id = ?";
     db.query(query, [cliente_id], (err, results) => {
       if (err) return callback(err, null);
       callback(null, results);

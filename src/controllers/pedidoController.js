@@ -5,11 +5,15 @@ const PedidoController = {
   createPedido: (req, res) => {
     const { name, valor, cliente_id } = req.body;
     if (!name || !valor || !cliente_id) {
-      return res.status(400).json({ error: "Campos obrigatórios: name, valor, cliente_id" });
+      return res
+        .status(400)
+        .json({ error: "Campos obrigatórios: name, valor, cliente_id" });
     }
     PedidoModel.create({ name, valor, cliente_id }, (err, result) => {
       if (err) return res.status(500).json({ error: "Erro ao criar pedido" });
-      res.status(201).json({ message: "Pedido criado com sucesso!", data: result });
+      res
+        .status(201)
+        .json({ message: "Pedido criado com sucesso!", data: result });
     });
   },
 
@@ -22,10 +26,13 @@ const PedidoController = {
   },
 
   // Buscar posts por ID de usuário
-  getPedidosByClienteId: (req, res) => {
+  getPedidoByClienteId: (req, res) => {
     const { cliente_id } = req.params;
     PedidoModel.findByClienteId(cliente_id, (err, results) => {
-      if (err) return res.status(500).json({ error: "Erro ao buscar pedidos do cliente" });
+      if (err)
+        return res
+          .status(500)
+          .json({ error: "Erro ao buscar pedidos do cliente" });
       res.status(200).json(results);
     });
   },
@@ -35,8 +42,11 @@ const PedidoController = {
     const { id } = req.params;
     const { name, valor } = req.body;
     PedidoModel.update(id, { name, valor }, (err, result) => {
-      if (err) return res.status(500).json({ error: "Erro ao atualizar pedido" });
-      res.status(200).json({ message: "Pedido atualizado com sucesso!", data: result });
+      if (err)
+        return res.status(500).json({ error: "Erro ao atualizar pedido" });
+      res
+        .status(200)
+        .json({ message: "Pedido atualizado com sucesso!", data: result });
     });
   },
 
@@ -45,7 +55,9 @@ const PedidoController = {
     const { id } = req.params;
     PedidoModel.delete(id, (err, result) => {
       if (err) return res.status(500).json({ error: "Erro ao deletar pedido" });
-      res.status(200).json({ message: "Pedido deletado com sucesso!", data: result });
+      res
+        .status(200)
+        .json({ message: "Pedido deletado com sucesso!", data: result });
     });
   },
 };

@@ -108,7 +108,7 @@ router.get("/", PedidoController.getAllPedidos);
  *       404:
  *         description: Cliente não encontrado
  */
-router.get("/user/:userId", PedidoController.getPedidoByClienteId);
+router.get("/user/:cliente_id", PedidoController.getPedidoByClienteId);
 
 /**
  * @swagger
