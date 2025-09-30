@@ -7,15 +7,12 @@ CREATE TABLE cliente (
   name VARCHAR(100),
   email VARCHAR(100)
 );
-SELECT * FROM cliente;
 
-CREATE TABLE pedido(
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL, 
-    valor DECIMAL(10.2) NOT NULL,
-    cliente_id INT NOT NULL,
-    FOREIGN KEY(cliente_id)
-    REFERENCES cliente(id)
+CREATE TABLE pedido (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL, 
+  valor DECIMAL(10,2) NOT NULL, 
+  cliente_id INT NOT NULL,
+  FOREIGN KEY (cliente_id) REFERENCES cliente(id) ON DELETE CASCADE
 );
 
-Adicionar o on cascade nas tabelas
