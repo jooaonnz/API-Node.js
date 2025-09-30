@@ -17,3 +17,5 @@ CREATE TABLE pedido(
     FOREIGN KEY(cliente_id)
     REFERENCES cliente(id)
 );
+
+Adicionar o on cascade nas tabelas
