@@ -12,7 +12,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName='PagePedido'>
           <Stack.Screen
-            name='Pagina para criar pedido'
+            name='PagePedido'
             component={PagePedido}
             option={{headerShown:false}}
           />
