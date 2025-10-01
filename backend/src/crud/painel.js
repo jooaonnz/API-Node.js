@@ -1,7 +1,5 @@
 const prompt = require("prompt-sync")({ sigint: true });
-const { Cliente } = require("../models/userModel");
-const { Pedido } = require("../models/pedidoModel");
-const connection = require("../config/connection");
+const db = require("../config/connection").promise(); // usa promise
 
 async function menu() {
   console.log("\n===== CRUD Console =====");
@@ -16,53 +14,91 @@ async function menu() {
   const opcao = prompt("Escolha uma opção: ");
 
   switch (opcao) {
-    case "1":
-      const clientes = await Cliente.findAll();
-      console.log(clientes.map((c) => c.toJSON()));
+    case "1": // Listar Clientes
+      try {
+        const [clientes] = await db.query("SELECT * FROM cliente");
+        console.table(clientes);
+      } catch (err) {
+        console.error("Erro ao listar clientes:", err);
+      }
       break;
-    case "2":
-      const nome = prompt("Nome: ");
-      const email = prompt("Email: ");
-      await Cliente.create({ nome, email });
-      console.log("Cliente criado com sucesso!");
+
+    case "2": // Criar Cliente
+      try {
+        const nome = prompt("Nome: ");
+        const email = prompt("Email: ");
+        await db.query("INSERT INTO cliente (nome, email) VALUES (?, ?)", [
+          nome,
+          email,
+        ]);
+        console.log("Cliente criado com sucesso!");
+      } catch (err) {
+        console.error("Erro ao criar cliente:", err);
+      }
       break;
-    case "3":
-      const idUpdate = prompt("ID do cliente: ");
-      const novoNome = prompt("Novo nome: ");
-      await Cliente.update({ nome: novoNome }, { where: { id: idUpdate } });
-      console.log("Cliente atualizado!");
+
+    case "3": // Atualizar Cliente
+      try {
+        const idUpdate = prompt("ID do cliente: ");
+        const novoNome = prompt("Novo nome: ");
+        await db.query("UPDATE cliente SET nome = ? WHERE id = ?", [
+          novoNome,
+          idUpdate,
+        ]);
+        console.log("Cliente atualizado!");
+      } catch (err) {
+        console.error("Erro ao atualizar cliente:", err);
+      }
       break;
-    case "4":
-      const idDel = prompt("ID do cliente: ");
-      await Cliente.destroy({ where: { id: idDel } });
-      console.log("Cliente deletado!");
+
+    case "4": // Deletar Cliente
+      try {
+        const idDel = prompt("ID do cliente: ");
+        await db.query("DELETE FROM cliente WHERE id = ?", [idDel]);
+        console.log("Cliente deletado!");
+      } catch (err) {
+        console.error("Erro ao deletar cliente:", err);
+      }
       break;
-    case "5":
-      const pedidos = await Pedido.findAll({ include: Cliente });
-      console.log(pedidos.map((p) => p.toJSON()));
+
+    case "5": // Listar Pedidos
+      try {
+        const [pedidos] = await db.query(
+          `SELECT p.id, p.produto, p.valor, c.nome AS cliente
+           FROM pedido p
+           JOIN cliente c ON p.cliente_id = c.id`
+        );
+        console.table(pedidos);
+      } catch (err) {
+        console.error("Erro ao listar pedidos:", err);
+      }
       break;
-    case "6":
-      const clienteId = prompt("ID do cliente: ");
-      const produto = prompt("Produto: ");
-      const valor = prompt("Valor: ");
-      await Pedido.create({ cliente_id: clienteId, produto, valor });
-      console.log("Pedido criado!");
+
+    case "6": // Criar Pedido
+      try {
+        const clienteId = prompt("ID do cliente: ");
+        const produto = prompt("Produto: ");
+        const valor = prompt("Valor: ");
+        await db.query(
+          "INSERT INTO pedido (cliente_id, produto, valor) VALUES (?, ?, ?)",
+          [clienteId, produto, valor]
+        );
+        console.log("Pedido criado!");
+      } catch (err) {
+        console.error("Erro ao criar pedido:", err);
+      }
       break;
+
     case "0":
+      console.log("Saindo...");
       process.exit();
+
     default:
       console.log("Opção inválida!");
   }
 
-  menu();
+  await menu(); // chama novamente o menu
 }
 
-// conectar banco e iniciar
-(async () => {
-  try {
-    await require("../models").sequelize.sync(); // se usa Sequelize
-    menu();
-  } catch (err) {
-    console.error("Erro ao rodar crud:", err);
-  }
-})();
+// Inicia o menu
+menu();
