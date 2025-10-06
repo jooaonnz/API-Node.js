@@ -97,8 +97,7 @@ async function menu() {
       console.log("Opção inválida!");
   }
 
-  await menu(); // chama novamente o menu
+  await menu();
 }
 
-// Inicia o menu
 menu();

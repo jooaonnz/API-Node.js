@@ -4,7 +4,7 @@ USE loja;
 
 CREATE TABLE cliente (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100),
+  nome VARCHAR(100),
   email VARCHAR(100)
 );
 
