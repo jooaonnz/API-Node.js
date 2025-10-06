@@ -63,7 +63,7 @@ async function menu() {
     case "5": // Listar Pedidos
       try {
         const [pedidos] = await db.query(
-          `SELECT p.id, p.produto, p.valor, c.nome AS cliente
+          `SELECT p.id, p.nome, p.valor, c.nome AS cliente
            FROM pedido p
            JOIN cliente c ON p.cliente_id = c.id`
         );
@@ -79,7 +79,7 @@ async function menu() {
         const produto = prompt("Produto: ");
         const valor = prompt("Valor: ");
         await db.query(
-          "INSERT INTO pedido (cliente_id, produto, valor) VALUES (?, ?, ?)",
+          "INSERT INTO pedido (cliente_id, nome, valor) VALUES (?, ?, ?)",
           [clienteId, produto, valor]
         );
         console.log("Pedido criado!");
